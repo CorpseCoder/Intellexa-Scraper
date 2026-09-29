@@ -12,13 +12,24 @@ def scrapeHNews(page):
     for item in items:
         print(item.text_content())
 
+def scrapeTechCrunch(page):
+    page.goto("https://techcrunch.com/latest/")
+    items = page.locator("a.loop-card__title-link").all()
+    for item in items:
+        print(item.text_content())
+
 with sync_playwright() as p:
     browser = p.firefox.launch(headless=False)   
     page = browser.new_page()
     print("YCombinator:-")
     scrapeYCombinator(page)
+    print()
     print("HackerNews:-")
     scrapeHNews(page)
+    print()
+    print("Tech Crunch:-")
+    scrapeTechCrunch(page)
+    print()
     
     while True:
         pass
