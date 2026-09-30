@@ -18,8 +18,14 @@ def scrapeTechCrunch(page):
     for item in items:
         print(item.text_content())
 
+def scrapeXDADev(page):
+    page.goto("https://www.xda-developers.com/news/")
+    items = page.locator("h5.display-card-title").all()
+    for item in items:
+        print(item.text_content().strip())
+
 with sync_playwright() as p:
-    browser = p.firefox.launch(headless=False)   
+    browser = p.firefox.launch()   
     page = browser.new_page()
     print("YCombinator:-")
     scrapeYCombinator(page)
@@ -30,6 +36,8 @@ with sync_playwright() as p:
     print("Tech Crunch:-")
     scrapeTechCrunch(page)
     print()
+    print("XDA Developers:-")
+    scrapeXDADev(page)
+    print()
     
-    while True:
-        pass
+    browser.close()
